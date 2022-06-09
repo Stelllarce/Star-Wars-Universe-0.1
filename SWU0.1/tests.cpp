@@ -2,6 +2,8 @@
 #include "../../doctest.h"
 #include <iostream>
 #include "Jedi.h"
+#include "Interface.h"
+#include "Planet.h"
 
 TEST_SUITE("Testing jedi class") {
 
@@ -21,4 +23,15 @@ TEST_SUITE("Testing jedi class") {
 
     }
     
+}
+TEST_SUITE("Testing Interface") { 
+
+    TEST_CASE("Testing add_planet") { 
+    Interface::add_planet(String("bob"));
+    ofstream ofs("bob.dat", std::ios::binary);
+    CHECK(ofs.good() == true);
+    ofs.close();
+    
+    }
+
 }

@@ -1,10 +1,11 @@
 #include "Interface.h"
 #include <iostream>
 #include <fstream>
-
-void Interface::open(String filename) { 
+#include <exception>
+using namespace std;
+void Interface::open(std::string filename) { 
 	
-    ofstream of(filename.cStr(), ios::out | ios::binary);
+    ofstream of(filename.c_str(), ios::out | ios::binary);
 	
     if (!of)
     {
@@ -14,9 +15,11 @@ void Interface::open(String filename) {
     of.close();
 }
 
-void Interface::add_planet(const String &name) {
-	String filename = name + String(".dat");
-    ofstream of(filename.cStr(), ios::out | ios::binary);
-    of.write(name.cStr(), sizeof(name.cStr()));
+void Interface::add_planet(const std::string &name) {
+	std::string filename(".dat");
+    name + filename;
+    ofstream of(name.c_str(), ios::out | ios::binary);
+    of.write(name.c_str(), sizeof(name.c_str()));
     of.close();
+    return;
 }

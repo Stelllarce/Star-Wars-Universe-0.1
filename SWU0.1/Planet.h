@@ -1,18 +1,20 @@
 #ifndef _PLANET_H_
 #define _PLANET_H_
 #include "Jedi.h"
-#include "../String/Stringh.h"
-#include "../Vector/Vector.h"
+#include <string>
+#include <vector>
 class Planet {
     
     private: 
-    String name;
-    Vector<Jedi> jedi;
+    std::string name;
+    std::vector<Jedi> jedi;
     static int capacity;	
     public: 
-    Planet(String name);
-    void save(String filename);
-    void load(String filename);
+    Planet() = default;
+    Planet(std::string name);
+    void save(std::string filename);
+    void load(std::string filename);
 	
+    
 };
 #endif // _PLANET_H_

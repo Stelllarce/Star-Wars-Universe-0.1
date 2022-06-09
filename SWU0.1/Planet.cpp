@@ -1,23 +1,23 @@
 #include "Planet.h"
 #include <fstream>
-Planet::Planet(String name): name(name) {}
+Planet::Planet(std::string name): name(name) {}
 
-void Planet::save(String filename)
+void Planet::save(std::string filename)
 {
-   for (int i = 0; i < jedi.getSize(); i++)
+   for (int i = 0; i < jedi.size(); i++)
    {
        jedi[i].save(filename);             
    }
-    std::ofstream of(filename.cStr(), std::ios::out | std::ios::binary);
-    of.write((char*) jedi.getSize(), sizeof(jedi.getSize()));
+    std::ofstream of(filename.c_str(), std::ios::out | std::ios::binary);
+    of.write((char*) jedi.size(), sizeof(jedi.size()));
     of.close();
 }
 
-void Planet::load(String filename)
+void Planet::load(std::string filename)
 {
     int size;
-    std::ifstream fs(filename.cStr(), std::ios::in | std::ios::binary);
-    fs.read((char*) jedi.getSize(), sizeof(jedi.getSize()));
+    std::ifstream fs(filename.c_str(), std::ios::in | std::ios::binary);
+    fs.read((char*) jedi.size(), sizeof(jedi.size()));
     fs.close();
     for (int i = 0; i < size; i++)
     {
@@ -27,6 +27,5 @@ void Planet::load(String filename)
 }
 
 int Planet::capacity = 100;
-
 
 
