@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "Jedi.h"
 using namespace std;
 
@@ -9,12 +10,12 @@ int main() {
     cout << "To check available commands type '>help'" << '\n';
     cout << "Enter a command: ";
 
-    String user_input;
-    String current_file_name;
+    std::string user_input;
+    std::string current_file_name;
     while (cin >> user_input) 
     {
 		
-        if (user_input == String(">help"))
+        if (user_input == std::string(">help"))
         {
             cout << "Available commands:\n";
             cout << ">open <filepath> - opens the specified file\n";
@@ -25,36 +26,36 @@ int main() {
             cout << "Enter a command: ";
         }
 
-        if (user_input.my_substr(0, 5) == String(">open"))
+        if (user_input.substr(0, 5) == std::string(">open"))
         {
-            String file_path = user_input.my_substr(6, user_input.get_size() - 6);
+            std::string file_path = user_input.substr(6, user_input.size() - 6);
             current_file_name = file_path;
             cout << file_path << " opened succesfully!\n\n";
             cout << "Enter a command: "; 
         }
         
-        if (user_input == String(">close"))
+        if (user_input == std::string(">close"))
         {
             cout << current_file_name << " closed succesfully!\n\n";
             cout << "Enter a command: "; 
         }
 
-        if (user_input == String(">save"))
+        if (user_input == std::string(">save"))
         {
             cout << current_file_name << " saved succesfully!\n\n";
             cout << "Enter a command: "; 
 
         }
 
-        if (user_input.my_substr(0, 7) == String(">saveas"))
+        if (user_input.substr(0, 7) == std::string(">saveas"))
         {
-            String file_path = user_input.my_substr(8, user_input.get_size() - 8);
+            std::string file_path = user_input.substr(8, user_input.size() - 8);
             cout << "File saved succesfully as " << file_path << "!\n\n";
             cout << "Enter a command: "; 
 
         }
 
-        if (user_input == String(">exit"))
+        if (user_input == std::string(">exit"))
         {
             cout << "Exiting the program...";
             break;

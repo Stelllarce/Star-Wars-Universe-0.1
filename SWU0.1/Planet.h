@@ -10,8 +10,8 @@ class Planet {
     std::vector<Jedi> jedi;
     static int capacity;	
     public: 
-    Planet() = default;
-    Planet(std::string name);
+    Planet();
+    Planet(const std::string& name);
     void save(std::string filename);
     void load(std::string filename);
 	

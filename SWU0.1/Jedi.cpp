@@ -24,6 +24,35 @@ double Jedi::get_might()
     return might;
 }
 
+void Jedi::promote(double multiplier)
+{
+    if (jedi_rank < 5)
+    {
+        jedi_rank += 1;
+    }
+    else
+    {
+        std::cout << "Jedi has the highest possible rank!\n";
+        return;
+    }
+    
+    might *= (1 + multiplier);
+}
+
+void Jedi::demote(double multiplier)
+{
+   if (jedi_rank > 0)
+    {
+        jedi_rank -= 1;
+    }
+    else
+    {
+        std::cout << "Jedi has the lowest possible rank!\n";
+        return;
+    } 
+    might *= (1 - multiplier);
+}
+
 void Jedi::save(std::string filename)
 {
     std::ofstream of(filename.c_str(), std::ios::out | std::ios::binary);

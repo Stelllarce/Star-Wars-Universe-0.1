@@ -26,6 +26,9 @@ class Jedi{
     int get_age();
     double get_might();
 
+    void promote(double);
+    void demote(double);
+
 };
 
 #endif // _JEDI_H_

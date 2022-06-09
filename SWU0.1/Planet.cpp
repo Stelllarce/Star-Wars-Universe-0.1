@@ -1,6 +1,13 @@
 #include "Planet.h"
 #include <fstream>
-Planet::Planet(std::string name): name(name) {}
+using namespace std;
+Planet::Planet(const std::string& pname) {
+    this->name = pname;
+    std::string filename = pname + ".dat";
+    ofstream of(filename.c_str(), ios::out | ios::binary);
+    of.write(pname.c_str(), sizeof(pname));
+    of.close();
+}
 
 void Planet::save(std::string filename)
 {
@@ -28,4 +35,7 @@ void Planet::load(std::string filename)
 
 int Planet::capacity = 100;
 
-
+Planet::Planet(): name{std::string()}, jedi{std::vector<Jedi>()} 
+{
+    
+}

@@ -15,11 +15,4 @@ void Interface::open(std::string filename) {
     of.close();
 }
 
-void Interface::add_planet(const std::string &name) {
-	std::string filename(".dat");
-    name + filename;
-    ofstream of(name.c_str(), ios::out | ios::binary);
-    of.write(name.c_str(), sizeof(name.c_str()));
-    of.close();
-    return;
-}
+void Interface::add_planet(const std::string &filename) { Planet(filename); }
