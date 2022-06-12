@@ -13,7 +13,7 @@ class Interface {
     void exit();
     void help();
 
-    static void add_planet(const std::string& name);
+    static Planet& add_planet(const std::string &name);
     // virtual void create_jedi(std::string, std::string, int, int, std::string, int);
     // virtual void removeJedi(std::string, std::string);
     // virtual void promote_jedi(std::string, double);

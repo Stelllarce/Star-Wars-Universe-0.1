@@ -26,6 +26,12 @@ double Jedi::get_might()
 
 void Jedi::promote(double multiplier)
 {
+    if (name == "Anakin Skywalker" && jedi_rank == 2)
+    {
+        throw std::runtime_error("- You are on this council, but we do not grant you the rank of master.\n"
+        "- What? How can you do this? This is outrageous! It's unfair! How can you be on the council and not be a master?\n");
+    }
+    
     if (jedi_rank < 5)
     {
         jedi_rank += 1;

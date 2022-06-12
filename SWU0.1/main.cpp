@@ -40,17 +40,17 @@ int main() {
             cout << "Enter a command: "; 
         }
 
-        if (user_input == std::string(">save"))
-        {
-            cout << current_file_name << " saved succesfully!\n\n";
-            cout << "Enter a command: "; 
-
-        }
-
         if (user_input.substr(0, 7) == std::string(">saveas"))
         {
             std::string file_path = user_input.substr(8, user_input.size() - 8);
             cout << "File saved succesfully as " << file_path << "!\n\n";
+            cout << "Enter a command: "; 
+
+        }
+
+        if (user_input == std::string(">save"))
+        {
+            cout << current_file_name << " saved succesfully!\n\n";
             cout << "Enter a command: "; 
 
         }

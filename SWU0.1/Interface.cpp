@@ -15,4 +15,4 @@ void Interface::open(std::string filename) {
     of.close();
 }
 
-void Interface::add_planet(const std::string &filename) { Planet(filename); }
+Planet& Interface::add_planet(const std::string &name) { return Planet(name); }
