@@ -14,7 +14,7 @@ std::string Jedi::get_color()
     return light_saber_color;
 }
 
-int Jedi::get_age()
+int Jedi::get_age() const
 {
     return age;
 }
@@ -59,50 +59,50 @@ void Jedi::demote(double multiplier)
     might *= (1 - multiplier);
 }
 
+bool operator==(const Jedi& one, const Jedi& other)
+{
+    return (one.get_name() == other.get_name() && one.get_age() == other.get_age());
+}
+
 void Jedi::save(std::string filename)
 {
-    std::ofstream of(filename.c_str(), std::ios::out | std::ios::binary);
+    std::ofstream of(filename.c_str(), std::ios::app);
     if (!of)
     {
-        throw std::runtime_error("File error");
+        throw std::runtime_error("File error save");
     }
     
-    of.write(name.c_str(), sizeof(name));
-    of.write(light_saber_color.c_str(), sizeof(light_saber_color));
-    of.write((char*) &jedi_rank, sizeof(jedi_rank));
-    of.write((char*) &age, sizeof(age));
-    of.write((char*) &might, sizeof(might));    
+    of << name << "," << light_saber_color << "," << jedi_rank << "," <<  age << "," <<  might << '\n';
 
     of.close(); 
     if (!of.good())
     {
-        throw std::runtime_error("Error after closing");
+        throw std::runtime_error("Error after closing save");
     }
     
 }
 
-void Jedi::load(std::string filename)
+void Jedi::load(std::string filename, std::string jedi_name)
 {
-    std::ifstream fs(filename.c_str(), std::ios::in | std::ios::binary);
+    std::ifstream fs(filename.c_str(), std::ios::in);
 
     if (!fs)
     {
-        throw std::runtime_error("File error");
+        throw std::runtime_error("File error read");
     }
-    fs.read((char* ) name.c_str(), sizeof(name));
-    fs.read((char* ) light_saber_color.c_str(), sizeof(light_saber_color));
-    fs.read((char*) &jedi_rank, sizeof(jedi_rank));
-    fs.read((char*) &age, sizeof(age));
-    fs.read((char*) &might, sizeof(might));    
-
+    do 
+    {
+        fs >> name >> light_saber_color >> jedi_rank >> age >> might;
+    }while (name != jedi_name);
+    
     fs.close();
     if (!fs.good())
     {
-        throw std::runtime_error("Error after closing");
+        throw std::runtime_error("Error after closing read");
     }
 }
 
 std::string Jedi::get_name() const { return name; }
 
 
-Jedi::Jedi(std::string name, int age, std::string light_saber_color, double might): name(name), age(age), light_saber_color(light_saber_color), might(might), jedi_rank(0) {}
+Jedi::Jedi(std::string name, int rank, int age, std::string light_saber_color, double might): name(name), age(age), light_saber_color(light_saber_color), might(might), jedi_rank(rank) {}
