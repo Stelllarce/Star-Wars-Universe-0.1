@@ -4,6 +4,8 @@
 #include "Planet.h"
 #include <cstring>
 class Interface {
+    
+    private:
     static void save_to_planet_list(std::string planet_name);
     static bool jedi_exists(std::string planet_name,Jedi&);
     static bool jedi_exists(std::string planet_name,std::string jedi_name);
@@ -22,11 +24,11 @@ class Interface {
     static void removeJedi(std::string, std::string);
     static void promote_jedi(std::string, double);
     static void demote_jedi(std::string, double);
-    // virtual void get_strongest_jedi(std::string);
-    // virtual void get_youngest_jedi(std::string, int);
-    // virtual void get_most_used_saber_color(std::string, int);
+    static Jedi get_strongest_jedi(std::string);
+    static Jedi get_youngest_jedi(std::string, int);
+    static std::string get_most_used_saber_color(std::string, int);
     // virtual void get_most_used_saber_color(std::string);
-    // virtual void print(std::string);
+    static void print_planet(std::string);
 };
 
 #endif // _INTERFACE_H_

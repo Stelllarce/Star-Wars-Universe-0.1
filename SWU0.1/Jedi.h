@@ -13,8 +13,10 @@ class Jedi{
     double might;
 
     public:
+    Jedi();
     Jedi(std::string name, int rank, int age, std::string light_saber_color, double might);
- 	
+ 	Jedi(const Jedi& other);
+    Jedi& operator=(const Jedi& other);
         
     void save(std::string filename);
     void load(std::string filename, std::string jedi_name);
@@ -22,12 +24,15 @@ class Jedi{
     //getters
     std::string get_name() const;
     const char* const get_rank();
+    int getRank();
     std::string get_color();
     int get_age() const;
     double get_might();
 
     void promote(double);
     void demote(double);
+
+    void print_jedi();
 
     friend bool operator==(const Jedi&, const Jedi&);
     

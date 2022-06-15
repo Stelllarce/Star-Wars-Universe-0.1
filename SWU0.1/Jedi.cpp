@@ -9,6 +9,11 @@ const char* const Jedi::get_rank() {
     return ranks[jedi_rank];
 }
 
+int Jedi::getRank()
+{
+    return jedi_rank;
+}
+
 std::string Jedi::get_color()
 {
     return light_saber_color;
@@ -62,6 +67,12 @@ void Jedi::demote(double multiplier)
     std::cout << "Jedi " << name << " demoted succesfully\n";
 }
 
+void Jedi::print_jedi() 
+{
+    std::cout << name << ", light saber color: " << light_saber_color <<
+    ", rank: " << ranks[jedi_rank] << ", age: " << age << ", might: " << might << "\n";
+}
+
 bool operator==(const Jedi& one, const Jedi& other)
 {
     return (one.get_name() == other.get_name() && one.get_age() == other.get_age());
@@ -109,3 +120,29 @@ std::string Jedi::get_name() const { return name; }
 
 
 Jedi::Jedi(std::string name, int rank, int age, std::string light_saber_color, double might): name(name), age(age), light_saber_color(light_saber_color), might(might), jedi_rank(rank) {}
+
+Jedi::Jedi(): jedi_rank(0), age(0), might(0) {}
+
+Jedi::Jedi(const Jedi& other)
+{
+    name = other.name;
+    light_saber_color = other.light_saber_color;
+    jedi_rank = other.jedi_rank;
+    age = other.age;
+    might = other.might;
+}
+
+Jedi& Jedi::operator=(const Jedi& other)
+{
+    // name.erase();
+    // light_saber_color.erase();
+    if (this != &other)
+    {
+        name = other.name;
+        light_saber_color = other.light_saber_color;
+        jedi_rank = other.jedi_rank;
+        age = other.age;
+        might = other.might;
+    }
+    return *this;
+}

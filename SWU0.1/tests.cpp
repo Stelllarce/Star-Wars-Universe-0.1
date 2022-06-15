@@ -41,7 +41,7 @@ TEST_SUITE("Testing jedi class") {
         CHECK_EQ(bob.get_rank(), std::string("KNIGHT-ASPIRANT"));
         CHECK_EQ(bob.get_might(), 27);
         bob.demote(0.2);
-        CHECK_EQ(bob.get_rank(), std::string("PAWAN"));
+        CHECK_EQ(bob.get_rank(), std::string("PADWAN"));
         CHECK_EQ(bob.get_might(), 21.6);
 
         std::cout << "Trying to promote higher than GRANDMASTER\n";
@@ -112,8 +112,14 @@ TEST_SUITE("Testing Interface") {
         {
             //Interface::create_jedi(std::string("Tatooine"), std::string("Obi-Wan"), 0, 48, std::string("#00000"), 15);
             //Interface::create_jedi(std::string("Tatooine"), std::string("Anakin Skywalker"), 0, 22, std::string("#2E67F8"), 10);
+            // Interface::create_jedi(std::string("Tatooine"), std::string("Vader"), 5, 40, std::string("#FF0000"), 50);
+            // Interface::create_jedi(std::string("Tatooine"), std::string("Douku"), 5, 68, std::string("#FF0000"), 50);
+            // Interface::create_jedi(std::string("Tatooine"), std::string("Jar-Jar"), 5, 50, std::string("#FF0000"), 1200);
             //Interface::removeJedi(std::string("Tatooine"), std::string("Obi-Wan"));
-            Interface::promote_jedi(std::string("Obi-Wan"), 1);
+            // Interface::promote_jedi(std::string("Anakin Skywalker"), 1);
+            // Interface::get_strongest_jedi(std::string("Tatooine"));
+            // Interface::get_youngest_jedi(std::string("Tatooine"), 0);
+            // Interface::get_most_used_saber_color(std::string("Tatooine"), 5);
         }
         catch(const std::exception& e)
         {
@@ -121,5 +127,9 @@ TEST_SUITE("Testing Interface") {
         }
         
     }
+    TEST_CASE("Testing most used color") { 
     
+        //Interface::get_most_used_saber_color(std::string("Tatooine"), 5);
+        Interface::print_planet(std::string("Tatooine"));
+    }
 }

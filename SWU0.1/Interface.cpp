@@ -71,6 +71,71 @@ void Interface::demote_jedi(std::string jedi_name, double multiplier)
     search_through_files(jedi_name, multiplier, -1);
 }
 
+Jedi Interface::get_strongest_jedi(std::string planet_name)
+{
+    Planet chosen_p(planet_name.c_str());
+    chosen_p.load(planet_name);
+    if (chosen_p.is_empty())
+    {
+        throw std::runtime_error("There are no jedi on this planet\n");
+    }
+    
+    Jedi strongest;
+    strongest = chosen_p.find_stongest();
+    return strongest;
+}
+
+Jedi Interface::get_youngest_jedi(std::string planet_name, int r)
+{
+    Planet chosen_p(planet_name.c_str());
+    chosen_p.load(planet_name);
+    if (chosen_p.is_empty())
+    {
+        throw std::runtime_error("There are no jedi on this planet\n");
+        
+    }
+    Jedi young;
+    try
+    {
+        young = chosen_p.find_youngest(r);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    return young;
+    
+    
+}
+
+std::string Interface::get_most_used_saber_color(std::string planet_name, int r)
+{
+    Planet chosen_p(planet_name.c_str());
+    chosen_p.load(planet_name);
+    if (chosen_p.is_empty())
+    {
+        throw std::runtime_error("There are no jedi on this planet\n");
+  
+    }
+    std::string ms;
+    try
+    {
+        ms = chosen_p.find_ms_color(r);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    return ms;
+}
+
+void Interface::print_planet(std::string planet_name)
+{
+    Planet p(planet_name.c_str());
+    p.load(planet_name);
+    p.print();
+}
+
 
 bool Interface::planet_created(std::string name)
 {

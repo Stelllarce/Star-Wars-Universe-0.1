@@ -1,6 +1,8 @@
 #include "Planet.h"
 #include <fstream>
 #include <iostream>
+#include <vector>
+#include <exception>
 using namespace std;
 Planet::Planet(const std::string& pname): name(pname) {
     std::string filename = pname + ".txt";
@@ -22,7 +24,6 @@ void Planet::save(std::string filename)
     of.close();
     for (auto &current : jedi)
     {
-        cout << current.get_might();
         current.save(filepath);
     }
     
@@ -118,8 +119,6 @@ bool Planet::prom_dem_jed(std::string jedi_name, double m, int prom_dem)
         if (sought.get_name() == jedi_name && prom_dem == -1)
         {
             sought.demote(m);
-            // std::string filepath = name + ".txt";
-            // sought.save(filepath);
             return true;
         }
         
@@ -128,8 +127,153 @@ bool Planet::prom_dem_jed(std::string jedi_name, double m, int prom_dem)
     return false;
 }
 
-int Planet::capacity = 100;
+Jedi Planet::find_stongest() const
+{
+    Jedi strongest;
+    for (auto current : jedi) {
+
+        if (current.get_might() > strongest.get_might())
+        {
+            strongest = current;
+        }
+        
+    }
+    return strongest;
+}
+
+bool Planet::is_empty() const
+{
+    return jedi.size() == 0;
+}
+
+Jedi Planet::find_youngest(int rank) const
+{
+    Jedi youngest;
+    for (auto current : jedi) 
+    {
+        if (current.getRank() == rank && current.get_age() > youngest.get_age())
+        {
+            youngest = current;
+            
+        }
+        if (current.get_age() == youngest.get_age())
+        {
+            if (strcmp(current.get_name().c_str(), youngest.get_name().c_str()) < 0)
+            {
+                youngest = current;
+            }
+            else
+            {
+                continue;
+            }
+            
+            
+        }
+        
+        
+    }
+    if (youngest.get_age() != 0)
+    {
+        cout << "The youngest jedi on planet " << name << " is ";
+        youngest.print_jedi();
+        return youngest;
+    }
+    else
+    {
+        throw std::runtime_error("There are no jedi with such rank\n");
+    }
+    
+    
+}
+std::string sort_and_find(std::vector<std::string>&);
+std::string Planet::find_ms_color(int rank) const
+{
+    std::vector<std::string> colors;
+    for (auto current : jedi) 
+    {
+        if (current.getRank() == rank)
+        {
+            colors.push_back(current.get_color());
+            
+        }
+        
+    }
+
+    if (colors.size() > 0)
+    {
+        std::string mscolor = sort_and_find(colors);
+        std::cout << "The most used color on planet " << name << " from rank " << rank << " is " << mscolor;
+        return mscolor;
+    }
+    else
+    {
+        throw std::runtime_error("There are no jedi with such rank\n");
+    }
+    
+}
+
+void Planet::print()
+{
+    sort(jedi);
+    std::cout << name << ":\n";
+    for (auto j : jedi) {
+
+        j.print_jedi();
+    }
+}
 
 Planet::Planet(): name{std::string("Empty world")} {}
 
 Planet::Planet(const char* name): name{std::string(name)} {}
+
+std::string sort_and_find(std::vector<std::string>& v) {
+
+    int max_count = 0, current_count = 0;
+    std::string most_used = v[0];
+
+    for (auto &curr : v)
+    {
+        for (int i = 0; i < v.size(); i++)  
+        {
+            if (curr == v[i])
+            {
+                current_count++;
+            }
+        }
+        if (current_count > max_count)   
+        {
+            max_count = current_count;
+            most_used = curr;
+        }
+        current_count = 0;
+        
+    }
+    return most_used;
+
+}
+
+void Planet::sort(std::vector<Jedi> & v)
+{
+    for (auto &curr : v)
+    {
+        for (int i = 0; i < v.size(); i++)
+        {
+            if (curr.getRank() < v[i].getRank())
+            {
+                std::swap(curr, v[i]);
+            }
+            if (curr.getRank() == v[i].getRank() && curr.get_name() != v[i].get_name())
+            {
+                if (strcmp(curr.get_name().c_str(), v[i].get_name().c_str()) > 0)
+                {
+                    std::swap(curr, v[i]);
+                }
+                
+            }
+            
+            
+        }
+        
+    }
+    
+}

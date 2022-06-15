@@ -1,14 +1,14 @@
 #ifndef _PLANET_H_
 #define _PLANET_H_
 #include "Jedi.h"
-#include <string>
+#include <cstring>
 #include <vector>
 class Planet {
     
     private: 
     std::string name;
     std::vector<Jedi> jedi;
-    static int capacity;	
+    void sort(std::vector<Jedi> & v);	
     public: 
     Planet();
     Planet(const std::string& name);
@@ -21,5 +21,11 @@ class Planet {
     bool seek_jedi(std::string jedi_name);
     void banish_jedi(std::string name);
     bool prom_dem_jed(std::string jedi_name, double multiplier, int prom_dem);
+    Jedi find_stongest() const;
+    bool is_empty() const;
+    Jedi find_youngest(int rank) const;
+    std::string find_ms_color(int rank) const;
+
+    void print();
 };
 #endif // _PLANET_H_
