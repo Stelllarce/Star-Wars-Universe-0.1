@@ -43,6 +43,8 @@ void Jedi::promote(double multiplier)
     }
     
     might *= (1 + multiplier);
+    std::cout << "Jedi " << name << " promoted succesfully\n";    
+
 }
 
 void Jedi::demote(double multiplier)
@@ -57,6 +59,7 @@ void Jedi::demote(double multiplier)
         return;
     } 
     might *= (1 - multiplier);
+    std::cout << "Jedi " << name << " demoted succesfully\n";
 }
 
 bool operator==(const Jedi& one, const Jedi& other)

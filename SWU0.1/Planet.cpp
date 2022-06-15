@@ -1,26 +1,31 @@
 #include "Planet.h"
 #include <fstream>
+#include <iostream>
 using namespace std;
 Planet::Planet(const std::string& pname): name(pname) {
     std::string filename = pname + ".txt";
+    
     ofstream infile(filename.c_str(), ios::app);
     infile.close();
 }
 
 void Planet::save(std::string filename)
 {
-    std::ofstream of(filename.c_str(), std::ios::app);
+    std::string filepath = filename + ".txt";
+    remove(filepath.c_str());
+    std::ofstream of(filepath.c_str(), std::ios::app);
     if (!of.is_open())
     {
         throw std::runtime_error("Error with opening of file");
     }
     
-    for (int i = 0; i < jedi.size(); i++)
+    of.close();
+    for (auto &current : jedi)
     {
-        jedi[i].save(filename);
+        cout << current.get_might();
+        current.save(filepath);
     }
     
-    of.close();
 }
 
 void Planet::load(std::string planet_name)
@@ -29,7 +34,8 @@ void Planet::load(std::string planet_name)
     std::ifstream infile(filename.c_str());
     if (!infile.is_open())
     {
-        throw std::runtime_error("Error with opening of file");
+        cout << "File not open";
+        return;
     }
     std::string line;
     while (getline(infile, line))
@@ -98,6 +104,28 @@ void Planet::banish_jedi(std::string name)
         
     }
     
+}
+
+bool Planet::prom_dem_jed(std::string jedi_name, double m, int prom_dem)
+{
+    for (auto &sought : jedi) { 
+    
+        if (sought.get_name() == jedi_name && prom_dem == 1)
+        {
+            sought.promote(m);
+            return true;
+        }
+        if (sought.get_name() == jedi_name && prom_dem == -1)
+        {
+            sought.demote(m);
+            // std::string filepath = name + ".txt";
+            // sought.save(filepath);
+            return true;
+        }
+        
+        
+    }
+    return false;
 }
 
 int Planet::capacity = 100;

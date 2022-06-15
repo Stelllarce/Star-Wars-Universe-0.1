@@ -20,5 +20,6 @@ class Planet {
     bool seek_jedi(Jedi&);
     bool seek_jedi(std::string jedi_name);
     void banish_jedi(std::string name);
+    bool prom_dem_jed(std::string jedi_name, double multiplier, int prom_dem);
 };
 #endif // _PLANET_H_

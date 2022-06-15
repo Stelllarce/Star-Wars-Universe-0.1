@@ -1,5 +1,5 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "../doctest.h"
+#include "../../doctest.h"
 #include "Jedi.h"
 #include "Interface.h"
 //#include "Planet.h"
@@ -8,7 +8,7 @@
 
 TEST_SUITE("Testing jedi class") {
 
-    Jedi bob(std::string("Obi-Wan"), 0, 48, std::string("#00000"), 15.3);
+    Jedi bob(std::string("Obi-Wan"), 0, 48, std::string("#00000"), 15);
     Jedi chosen(std::string("Anakin Skywalker"), 0, 22, std::string("#2E67F8"), 10);
     TEST_CASE("Testing rank display") {
 
@@ -36,14 +36,15 @@ TEST_SUITE("Testing jedi class") {
 
         bob.promote(0.5);
         CHECK_EQ(bob.get_rank(), std::string("PADWAN"));
-        CHECK_EQ(bob.get_might(), 22.95);
+        CHECK_EQ(bob.get_might(), 22.5);
         bob.promote(0.2);
         CHECK_EQ(bob.get_rank(), std::string("KNIGHT-ASPIRANT"));
-        CHECK_EQ(bob.get_might(), 27.54);
+        CHECK_EQ(bob.get_might(), 27);
         bob.demote(0.2);
-        CHECK_EQ(bob.get_rank(), std::string("PADWAN"));
-        CHECK_EQ(bob.get_might(), 22.032);
+        CHECK_EQ(bob.get_rank(), std::string("PAWAN"));
+        CHECK_EQ(bob.get_might(), 21.6);
 
+        std::cout << "Trying to promote higher than GRANDMASTER\n";
         for (int i = 0; i < 4; i++)
         {
             bob.promote(0.2);
@@ -57,7 +58,7 @@ TEST_SUITE("Testing jedi class") {
         
     }
     TEST_CASE("Testing demote method") { 
-    
+        std::cout << "Trying to demote lower than YOUNGLING\n";
         for (int i = 0; i < 5; i++)
         {
             bob.demote(0.2);
@@ -94,7 +95,8 @@ TEST_SUITE("Testing Interface") {
     TEST_CASE("Testing if add_planet creates proper file") {
         try
         {
-            Interface::add_planet(std::string("Tatooine"));
+            //Interface::add_planet(std::string("Mustafar"));
+            //Interface::add_planet(std::string("Tatooine"));
         }
         catch(const std::exception& e)
         {
@@ -108,7 +110,10 @@ TEST_SUITE("Testing Interface") {
     TEST_CASE("Testing created file") {
         try
         {
-            Interface::create_jedi(std::string("Tatooine"), std::string("Obi-Wan"), 3, 48, std::string("#00000"), 15.3);
+            //Interface::create_jedi(std::string("Tatooine"), std::string("Obi-Wan"), 0, 48, std::string("#00000"), 15);
+            //Interface::create_jedi(std::string("Tatooine"), std::string("Anakin Skywalker"), 0, 22, std::string("#2E67F8"), 10);
+            //Interface::removeJedi(std::string("Tatooine"), std::string("Obi-Wan"));
+            Interface::promote_jedi(std::string("Obi-Wan"), 1);
         }
         catch(const std::exception& e)
         {
