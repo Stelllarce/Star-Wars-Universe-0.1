@@ -185,7 +185,10 @@ Jedi Planet::find_youngest(int rank) const
     
     
 }
+
 std::string sort_and_find(std::vector<std::string>&);
+std::string sort_and_find_gm(std::vector<std::string>& v, std::vector<std::string> &used);
+
 std::string Planet::find_ms_color(int rank) const
 {
     std::vector<std::string> colors;
@@ -210,6 +213,45 @@ std::string Planet::find_ms_color(int rank) const
         throw std::runtime_error("There are no jedi with such rank\n");
     }
     
+}
+
+std::string Planet::find_msgm_color() const
+{
+    std::vector<std::string> colors;
+    std::vector<std::string> gm_colors;
+    std::vector<std::string> used_colors;
+    int gmcount = 0;
+    for (auto &current : jedi) 
+    {
+        if (current.getRank() == 5)
+        {
+            //std::cout << current.getRank() << current.get_name() << current.get_color() << '\n';
+            gm_colors.push_back(current.get_color());
+            ++gmcount;
+        }
+        colors.push_back(current.get_color()); 
+    }
+    if (gmcount == 0)
+    {
+        throw std::runtime_error("There are no grandmasters on this planet!");
+    }
+    for (int i = 0; i < colors.size(); ++i)
+    {
+        std::string mscolor = sort_and_find_gm(colors, used_colors);
+        for (auto &gm : gm_colors) 
+        {
+            // std::cout << mscolor << std::endl;
+            // std::cout << gm << std::endl;
+
+            if (mscolor == gm)
+            {
+                return mscolor;
+            }
+            
+        }
+        used_colors.push_back(mscolor);
+    }
+    throw std::runtime_error("There is no frequent color");
 }
 
 void Planet::print()
@@ -239,6 +281,44 @@ std::string sort_and_find(std::vector<std::string>& v) {
             {
                 current_count++;
             }
+        }
+        if (current_count > max_count)   
+        {
+            max_count = current_count;
+            most_used = curr;
+        }
+        current_count = 0;
+        
+    }
+    return most_used;
+
+}
+
+std::string sort_and_find_gm(std::vector<std::string>& v, std::vector<std::string> &used) {
+
+    int max_count = 0, current_count = 0;
+    std::string most_used = v[0];
+
+    for (auto &curr : v)
+    {
+        for (int i = 0; i < v.size(); i++)  
+        {
+            if (used.size() == 0 )
+            {
+                if (curr == v[i])
+                {
+                    current_count++;
+                    continue;
+                } 
+            }
+            
+            for (auto use : used)
+            {
+                if (curr == v[i] && curr != use)
+                {
+                    current_count++;
+                }  
+            } 
         }
         if (current_count > max_count)   
         {

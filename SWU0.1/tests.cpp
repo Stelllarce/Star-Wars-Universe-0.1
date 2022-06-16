@@ -14,24 +14,7 @@ TEST_SUITE("Testing jedi class") {
 
         CHECK(bob.get_rank() == std::string("YOUNGLING"));
     }
-    // TEST_CASE("Testing file funcitonality") {
-
-    //     bob.save(std::string("Jedi.txt"));
-    //     bob.load(std::string("Jedi.txt"), std::string("Obi-Wan"));
-    //     chosen.save(std::string("Jedi.txt"));
-    //     chosen.load(std::string("Jedi.txt"), std::string("Anakin Skywalker"));
-        
-    //     CHECK(bob.get_name() == std::string("Obi-Wan"));
-    //     CHECK_EQ(bob.get_color(), std::string("#00000"));
-    //     CHECK_EQ(bob.get_age(), 10);
-    //     CHECK_EQ(bob.get_might(), 10);
-
-    //     CHECK(chosen.get_name() == std::string("Anakin Skywalker"));
-    //     CHECK_EQ(chosen.get_color(), std::string("#2E67F8"));
-    //     CHECK_EQ(chosen.get_age(), 22);
-    //     CHECK_EQ(chosen.get_might(), 10);
-
-    // }
+    
     TEST_CASE("Testing promote/demote methods") {
 
         bob.promote(0.5);
@@ -116,10 +99,20 @@ TEST_SUITE("Testing Interface") {
             // Interface::create_jedi(std::string("Tatooine"), std::string("Douku"), 5, 68, std::string("#FF0000"), 50);
             // Interface::create_jedi(std::string("Tatooine"), std::string("Jar-Jar"), 5, 50, std::string("#FF0000"), 1200);
             //Interface::removeJedi(std::string("Tatooine"), std::string("Obi-Wan"));
-            // Interface::promote_jedi(std::string("Anakin Skywalker"), 1);
-            // Interface::get_strongest_jedi(std::string("Tatooine"));
-            // Interface::get_youngest_jedi(std::string("Tatooine"), 0);
-            // Interface::get_most_used_saber_color(std::string("Tatooine"), 5);
+            // Interface::demote_jedi(std::string("Vader"), 1);
+            // Interface::demote_jedi(std::string("Douku"), 1);
+            //Interface::demote_jedi(std::string("Jar-Jar"), 1);
+            Jedi test, test2;
+            test =  Interface::get_strongest_jedi(std::string("Tatooine"));
+            test2 = Interface::get_youngest_jedi(std::string("Tatooine"), 0);
+            Jedi a(std::string("Jar-Jar"), 5, 50, std::string("#FF0000"), 1200);
+            Jedi b(std::string("Anakin Skywalker"), 0, 22, std::string("#2E67F8"), 10);
+            CHECK_EQ(a, test);
+            CHECK_EQ(b, test2);
+            std::string most = Interface::get_most_used_saber_color(std::string("Tatooine"), 5);
+            CHECK_EQ(most, std::string("#FF0000"));
+            std::string most2 = Interface::get_most_used_saber_color(std::string("Tatooine"));
+            CHECK_EQ(most2, std::string("#FF0000"));
         }
         catch(const std::exception& e)
         {
@@ -127,9 +120,8 @@ TEST_SUITE("Testing Interface") {
         }
         
     }
-    TEST_CASE("Testing most used color") { 
+    TEST_CASE("Testing print planet") { 
     
-        //Interface::get_most_used_saber_color(std::string("Tatooine"), 5);
         Interface::print_planet(std::string("Tatooine"));
     }
 }

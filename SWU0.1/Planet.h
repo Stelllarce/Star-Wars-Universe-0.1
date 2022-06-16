@@ -25,6 +25,7 @@ class Planet {
     bool is_empty() const;
     Jedi find_youngest(int rank) const;
     std::string find_ms_color(int rank) const;
+    std::string find_msgm_color() const;
 
     void print();
 };

@@ -24,10 +24,10 @@ class Jedi{
     //getters
     std::string get_name() const;
     const char* const get_rank();
-    int getRank();
-    std::string get_color();
+    int getRank() const;
+    std::string get_color() const;
     int get_age() const;
-    double get_might();
+    double get_might() const;
 
     void promote(double);
     void demote(double);

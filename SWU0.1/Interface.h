@@ -27,8 +27,10 @@ class Interface {
     static Jedi get_strongest_jedi(std::string);
     static Jedi get_youngest_jedi(std::string, int);
     static std::string get_most_used_saber_color(std::string, int);
-    // virtual void get_most_used_saber_color(std::string);
+    static std::string get_most_used_saber_color(std::string);
     static void print_planet(std::string);
-};
+    //static void print_jedi(std::string);
 
+};
+//void operator+(const Planet& one, const Planet& other);
 #endif // _INTERFACE_H_

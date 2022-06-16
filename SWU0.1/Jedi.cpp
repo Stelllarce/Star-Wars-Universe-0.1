@@ -9,12 +9,12 @@ const char* const Jedi::get_rank() {
     return ranks[jedi_rank];
 }
 
-int Jedi::getRank()
+int Jedi::getRank() const
 {
     return jedi_rank;
 }
 
-std::string Jedi::get_color()
+std::string Jedi::get_color() const
 {
     return light_saber_color;
 }
@@ -24,7 +24,7 @@ int Jedi::get_age() const
     return age;
 }
 
-double Jedi::get_might()
+double Jedi::get_might() const
 {
     return might;
 }

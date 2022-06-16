@@ -129,6 +129,27 @@ std::string Interface::get_most_used_saber_color(std::string planet_name, int r)
     return ms;
 }
 
+std::string Interface::get_most_used_saber_color(std::string planet_name)
+{
+    Planet chosen_p(planet_name.c_str());
+    chosen_p.load(planet_name);
+    if (chosen_p.is_empty())
+    {
+        throw std::runtime_error("There are no jedi on this planet\n");
+  
+    }
+    std::string ms;
+    try
+    {
+        ms = chosen_p.find_msgm_color();
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    return ms;
+}
+
 void Interface::print_planet(std::string planet_name)
 {
     Planet p(planet_name.c_str());
