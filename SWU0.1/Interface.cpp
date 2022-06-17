@@ -3,16 +3,15 @@
 #include <fstream>
 #include <exception>
 using namespace std;
-void Interface::open(std::string filename) { 
+void Interface::open(std::string filename, Planet& p) { 
 	
-    ofstream of(filename.c_str(), ios::out | ios::binary);
-	
-    if (!of)
+    if (filename.find(".txt") != string::npos)
     {
-        throw runtime_error("File not open");
+        throw std::invalid_argument("File should be of .txt format.");
     }
-    
-    of.close();
+    filename = filename.erase(filename.find(".txt"), filename.find(".txt") + 3);
+    p.load(filename);
+    cout << filename << ".txt opened succesfully!\n\n";
 }
 
 void Interface::add_planet(std::string name) { 
@@ -58,7 +57,7 @@ void Interface::removeJedi(std::string planet_name, std::string jedi_name)
     temp.load(planet_name);
     temp.banish_jedi(jedi_name);
     temp.save(planet_name);
-    std::cout << "Jedi " << jedi_name << " removed successfully" << '\n';
+    std::cout << "Jedi " << jedi_name << " removed successfully from planet " << planet_name << '\n';
 }
 
 void Interface::promote_jedi(std::string jedi_name, double multiplier)
@@ -104,7 +103,6 @@ Jedi Interface::get_youngest_jedi(std::string planet_name, int r)
         std::cerr << e.what() << '\n';
     }
     return young;
-    
     
 }
 
@@ -154,7 +152,21 @@ void Interface::print_planet(std::string planet_name)
 {
     Planet p(planet_name.c_str());
     p.load(planet_name);
-    p.print();
+    p.print_rank();
+}
+
+void Interface::print_jedi(std::string jedi_name)
+{
+    search_through_files(jedi_name);
+}
+
+void operator+(std::string one, std::string other)
+{
+    std::cout << one << " and " << other << ":\n";
+    Planet p(one.c_str());
+    p.load(one);
+    p.load(other);
+    p.print_name();
 }
 
 
@@ -165,6 +177,31 @@ bool Interface::planet_created(std::string name)
     bool state = check.good();
     check.close();
     return state;
+}
+
+void Interface::search_through_files(std::string jedi_name)
+{
+    bool found = false;
+    string filename;
+    ifstream test("Planet_bodies.txt");
+    while (getline(test,  filename))
+    {
+        Planet temp(filename.c_str());
+        
+        temp.load(filename);
+        if (temp.seek_jedi_print(jedi_name)) {
+            
+            found = true;
+            return;
+        }
+
+    }
+    if (!found)
+    {
+        cout << "\nNo such jedi found on any planet!\n";
+        return;
+    }
+    
 }
 
 void Interface::search_through_files(string jedi_name, double mult, int promote_demote)
@@ -188,7 +225,7 @@ void Interface::search_through_files(string jedi_name, double mult, int promote_
     }
     if (!found)
     {
-        cout << "No such jedi found on any planet!";
+        cout << "\nNo such jedi found on any planet!\n";
         return;
     }
     

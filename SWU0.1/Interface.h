@@ -7,13 +7,14 @@ class Interface {
     
     private:
     static void save_to_planet_list(std::string planet_name);
-    static bool jedi_exists(std::string planet_name,Jedi&);
+    static bool jedi_exists(std::string planet_sname,Jedi&);
     static bool jedi_exists(std::string planet_name,std::string jedi_name);
     static bool planet_created(std::string name);
     static void search_through_files(std::string jedi_name, double multiplier, int prom_dem);
+    static void search_through_files(std::string jedi_name);
     public:
 	// void save();
-    void open(std::string filename);
+    static void open(std::string filename, Planet& p);
     // void save_as();
     // void close();
     // void exit();
@@ -29,8 +30,8 @@ class Interface {
     static std::string get_most_used_saber_color(std::string, int);
     static std::string get_most_used_saber_color(std::string);
     static void print_planet(std::string);
-    //static void print_jedi(std::string);
+    static void print_jedi(std::string);
 
 };
-//void operator+(const Planet& one, const Planet& other);
+void operator+(std::string one, std::string other);
 #endif // _INTERFACE_H_

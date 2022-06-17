@@ -8,7 +8,8 @@ class Planet {
     private: 
     std::string name;
     std::vector<Jedi> jedi;
-    void sort(std::vector<Jedi> & v);	
+    void sort_rank(std::vector<Jedi> & v);	
+    void sort_name(std::vector<Jedi> & v);
     public: 
     Planet();
     Planet(const std::string& name);
@@ -26,7 +27,12 @@ class Planet {
     Jedi find_youngest(int rank) const;
     std::string find_ms_color(int rank) const;
     std::string find_msgm_color() const;
+    bool seek_jedi_print(std::string jedi_name);
 
-    void print();
+    friend void operator+(std::string one, std::string other);
+
+    void print_rank();
+    void print_name();
 };
+void operator+(std::string one, std::string other);
 #endif // _PLANET_H_

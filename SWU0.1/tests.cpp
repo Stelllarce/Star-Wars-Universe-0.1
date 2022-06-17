@@ -98,21 +98,21 @@ TEST_SUITE("Testing Interface") {
             // Interface::create_jedi(std::string("Tatooine"), std::string("Vader"), 5, 40, std::string("#FF0000"), 50);
             // Interface::create_jedi(std::string("Tatooine"), std::string("Douku"), 5, 68, std::string("#FF0000"), 50);
             // Interface::create_jedi(std::string("Tatooine"), std::string("Jar-Jar"), 5, 50, std::string("#FF0000"), 1200);
-            //Interface::removeJedi(std::string("Tatooine"), std::string("Obi-Wan"));
+            Interface::removeJedi(std::string("Mustafar"), std::string("Bob"));
             // Interface::demote_jedi(std::string("Vader"), 1);
             // Interface::demote_jedi(std::string("Douku"), 1);
             //Interface::demote_jedi(std::string("Jar-Jar"), 1);
-            Jedi test, test2;
-            test =  Interface::get_strongest_jedi(std::string("Tatooine"));
-            test2 = Interface::get_youngest_jedi(std::string("Tatooine"), 0);
-            Jedi a(std::string("Jar-Jar"), 5, 50, std::string("#FF0000"), 1200);
-            Jedi b(std::string("Anakin Skywalker"), 0, 22, std::string("#2E67F8"), 10);
-            CHECK_EQ(a, test);
-            CHECK_EQ(b, test2);
-            std::string most = Interface::get_most_used_saber_color(std::string("Tatooine"), 5);
-            CHECK_EQ(most, std::string("#FF0000"));
-            std::string most2 = Interface::get_most_used_saber_color(std::string("Tatooine"));
-            CHECK_EQ(most2, std::string("#FF0000"));
+            // Jedi test, test2;
+            // test =  Interface::get_strongest_jedi(std::string("Tatooine"));
+            // test2 = Interface::get_youngest_jedi(std::string("Tatooine"), 0);
+            // Jedi a(std::string("Jar-Jar"), 5, 50, std::string("#FF0000"), 1200);
+            // Jedi b(std::string("Anakin Skywalker"), 0, 22, std::string("#2E67F8"), 10);
+            // CHECK_EQ(a, test);
+            // CHECK_EQ(b, test2);
+            // std::string most = Interface::get_most_used_saber_color(std::string("Tatooine"), 5);
+            // CHECK_EQ(most, std::string("#FF0000"));
+            // std::string most2 = Interface::get_most_used_saber_color(std::string("Tatooine"));
+            // CHECK_EQ(most2, std::string("#FF0000"));
         }
         catch(const std::exception& e)
         {
@@ -120,7 +120,7 @@ TEST_SUITE("Testing Interface") {
         }
         
     }
-    TEST_CASE("Testing print planet") { 
+    TEST_CASE("Testing print_rank planet") { 
     
         Interface::print_planet(std::string("Tatooine"));
     }

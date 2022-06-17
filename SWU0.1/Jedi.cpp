@@ -48,7 +48,7 @@ void Jedi::promote(double multiplier)
     }
     
     might *= (1 + multiplier);
-    std::cout << "Jedi " << name << " promoted succesfully\n";    
+    std::cout << "Jedi " << name << " promoted succesfully to " << get_rank() << " by mult of " << multiplier << '\n';   
 
 }
 
@@ -64,7 +64,7 @@ void Jedi::demote(double multiplier)
         return;
     } 
     might *= (1 - multiplier);
-    std::cout << "Jedi " << name << " demoted succesfully\n";
+    std::cout << "Jedi " << name << " demoted succesfully to " << get_rank() << " by mult of " << multiplier << '\n';
 }
 
 void Jedi::print_jedi() 

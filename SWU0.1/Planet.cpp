@@ -94,6 +94,22 @@ bool Planet::seek_jedi(std::string jedi_name)
     return false;
 }
 
+bool Planet::seek_jedi_print(std::string jedi_name)
+{
+    for (auto &sought : jedi)
+    {
+        
+        if (sought.get_name() == jedi_name)
+        {
+            std::cout << "On " << name << ": " << '\n';
+            sought.print_jedi();
+            return true;
+        }
+        
+    }
+    return false;
+}
+
 void Planet::banish_jedi(std::string name)
 {
     for (int i = 0; i < jedi.size(); i++)
@@ -149,9 +165,16 @@ bool Planet::is_empty() const
 Jedi Planet::find_youngest(int rank) const
 {
     Jedi youngest;
+    bool temp = true;
     for (auto current : jedi) 
     {
-        if (current.getRank() == rank && current.get_age() > youngest.get_age())
+        if (current.getRank() == rank && temp)
+        {
+            youngest = current;
+            temp = false;
+        }
+        
+        if (current.getRank() == rank && current.get_age() < youngest.get_age())
         {
             youngest = current;
             
@@ -174,13 +197,13 @@ Jedi Planet::find_youngest(int rank) const
     }
     if (youngest.get_age() != 0)
     {
-        cout << "The youngest jedi on planet " << name << " is ";
-        youngest.print_jedi();
+        // cout << "The youngest jedi on planet " << name << " is ";
+        // youngest.print_jedi();
         return youngest;
     }
     else
     {
-        throw std::runtime_error("There are no jedi with such rank\n");
+        throw std::runtime_error("\nThere are no jedi with such rank\n");
     }
     
     
@@ -205,12 +228,12 @@ std::string Planet::find_ms_color(int rank) const
     if (colors.size() > 0)
     {
         std::string mscolor = sort_and_find(colors);
-        std::cout << "The most used color on planet " << name << " from rank " << rank << " is " << mscolor;
+        //std::cout << "The most used color on planet " << name << " from rank " << rank << " is " << mscolor;
         return mscolor;
     }
     else
     {
-        throw std::runtime_error("There are no jedi with such rank\n");
+        throw std::runtime_error("\nThere are no jedi with such rank\n");
     }
     
 }
@@ -233,7 +256,7 @@ std::string Planet::find_msgm_color() const
     }
     if (gmcount == 0)
     {
-        throw std::runtime_error("There are no grandmasters on this planet!");
+        throw std::runtime_error("\nThere are no grandmasters on this planet!\n");
     }
     for (int i = 0; i < colors.size(); ++i)
     {
@@ -251,13 +274,22 @@ std::string Planet::find_msgm_color() const
         }
         used_colors.push_back(mscolor);
     }
-    throw std::runtime_error("There is no frequent color");
+    throw std::runtime_error("\nThere is no frequent color\n");
 }
 
-void Planet::print()
+void Planet::print_rank()
 {
-    sort(jedi);
+    sort_rank(jedi);
     std::cout << name << ":\n";
+    for (auto j : jedi) {
+
+        j.print_jedi();
+    }
+}
+
+void Planet::print_name()
+{
+    sort_name(jedi);
     for (auto j : jedi) {
 
         j.print_jedi();
@@ -332,7 +364,7 @@ std::string sort_and_find_gm(std::vector<std::string>& v, std::vector<std::strin
 
 }
 
-void Planet::sort(std::vector<Jedi> & v)
+void Planet::sort_rank(std::vector<Jedi> & v)
 {
     for (auto &curr : v)
     {
@@ -344,7 +376,7 @@ void Planet::sort(std::vector<Jedi> & v)
             }
             if (curr.getRank() == v[i].getRank() && curr.get_name() != v[i].get_name())
             {
-                if (strcmp(curr.get_name().c_str(), v[i].get_name().c_str()) > 0)
+                if (strcmp(curr.get_name().c_str(), v[i].get_name().c_str()) < 0)
                 {
                     std::swap(curr, v[i]);
                 }
@@ -356,4 +388,18 @@ void Planet::sort(std::vector<Jedi> & v)
         
     }
     
+}
+void Planet::sort_name(std::vector<Jedi> & v) 
+{
+    for (auto &curr : v)
+    {
+        for (int i = 0; i < v.size(); i++)
+        {
+            if (strcmp(curr.get_name().c_str(), v[i].get_name().c_str()) < 0)
+            {
+                std::swap(curr, v[i]);
+            }
+        }
+        
+    }
 }
