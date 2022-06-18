@@ -126,13 +126,21 @@ void Command::starwars_command(std::string& user_input, std::string& current_fil
 
             for (int i = 0; i < 6; i++)
             {
-                if (ranks[i] == rank_str.c_str())
-                {
-                    rank =  i;
-                }
+                if (!(strcmp(ranks[i], rank_str.c_str())))
+                    {
+                        rank =  i;
+                    }
                 
             }
-            Interface::create_jedi(planet, name, age, rank, saber_col, might);
+            try
+            {
+                Interface::create_jedi(planet, name, rank, age, saber_col, might);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
+            
 
         }
         
@@ -140,8 +148,7 @@ void Command::starwars_command(std::string& user_input, std::string& current_fil
         {
             string multiplier = user_input.substr(user_input.find("/") + 1);
             string name = user_input.substr(strlen(">promote") + 1, user_input.length() - (multiplier.length() + strlen(">promote") + 2));
-            // cout << name << '\n';
-            // cout << multiplier << '\n';
+
             Interface::promote_jedi(name, stod(multiplier));
         }
 
@@ -149,10 +156,7 @@ void Command::starwars_command(std::string& user_input, std::string& current_fil
         {
             string multiplier = user_input.substr(user_input.find("/") + 1);
             string name = user_input.substr(strlen(">demote") + 1, user_input.length() - (multiplier.length() + strlen(">demote") + 2));
-            // cout << name << '\n';
-
-            // cout << multiplier << '\n';
-
+         
             Interface::demote_jedi(name, stod(multiplier));
 
         }

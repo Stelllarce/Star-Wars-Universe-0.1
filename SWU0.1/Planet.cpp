@@ -35,7 +35,7 @@ void Planet::load(std::string planet_name)
     std::ifstream infile(filename.c_str());
     if (!infile.is_open())
     {
-        cout << "File not open";
+        cout << "File not open\n";
         return;
     }
     std::string line;
