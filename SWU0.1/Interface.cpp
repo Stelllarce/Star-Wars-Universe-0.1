@@ -155,12 +155,7 @@ void Interface::print_planet(std::string planet_name)
     p.print_rank();
 }
 
-void Interface::print_jedi(std::string jedi_name)
-{
-    search_through_files(jedi_name);
-}
-
-void operator+(std::string one, std::string other)
+void Interface::print_planets(std::string one, std::string other)
 {
     std::cout << one << " and " << other << ":\n";
     Planet p(one.c_str());
@@ -169,6 +164,10 @@ void operator+(std::string one, std::string other)
     p.print_name();
 }
 
+void Interface::print_jedi(std::string jedi_name)
+{
+    search_through_files(jedi_name);
+}
 
 bool Interface::planet_created(std::string name)
 {

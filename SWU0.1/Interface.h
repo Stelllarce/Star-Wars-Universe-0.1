@@ -30,8 +30,8 @@ class Interface {
     static std::string get_most_used_saber_color(std::string, int);
     static std::string get_most_used_saber_color(std::string);
     static void print_planet(std::string);
+    static void print_planets(std::string one, std::string other);
     static void print_jedi(std::string);
 
 };
-void operator+(std::string one, std::string other);
 #endif // _INTERFACE_H_

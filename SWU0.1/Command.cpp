@@ -246,7 +246,7 @@ void Command::starwars_command(std::string& user_input, std::string& current_fil
             string pname1 = user_input.substr(user_input.find("+") + 2);
             string pname2 = user_input.substr(0, user_input.length() - (pname1.length() + 3));
             cout << pname1 << " " << pname2 << endl; 
-            pname1 + pname2;
+            Interface::print_planets(pname1, pname2);
         }
 
 }

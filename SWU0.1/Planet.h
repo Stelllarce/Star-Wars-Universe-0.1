@@ -29,10 +29,8 @@ class Planet {
     std::string find_msgm_color() const;
     bool seek_jedi_print(std::string jedi_name);
 
-    friend void operator+(std::string one, std::string other);
-
     void print_rank();
     void print_name();
 };
-void operator+(std::string one, std::string other);
+
 #endif // _PLANET_H_
