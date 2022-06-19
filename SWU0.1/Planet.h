@@ -28,6 +28,7 @@ class Planet {
     std::string find_ms_color(int rank) const;
     std::string find_msgm_color() const;
     bool seek_jedi_print(std::string jedi_name);
+    void clear_memory();
 
     void print_rank();
     void print_name();

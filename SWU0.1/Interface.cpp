@@ -3,15 +3,66 @@
 #include <fstream>
 #include <exception>
 using namespace std;
-void Interface::open(std::string filename, Planet& p) { 
+void Interface::open(std::string& filename, Planet& p, bool& is_open) { 
 	
-    if (filename.find(".txt") != string::npos)
+    if (!(filename.find(".txt") != string::npos))
     {
         throw std::invalid_argument("File should be of .txt format.");
     }
     filename = filename.erase(filename.find(".txt"), filename.find(".txt") + 3);
     p.load(filename);
-    cout << filename << ".txt opened succesfully!\n\n";
+    is_open = true;
+    cout << filename << ".txt opened succesfully!\n";
+}
+
+void Interface::save_as(std::string& filename, Planet& p,const bool is_open)
+{
+    if (!(filename.find(".txt") != string::npos))
+    {
+        throw std::invalid_argument("File should be of .txt format.");
+    }
+    if (!is_open)
+    {
+        throw std::runtime_error("There is no current file opened!");
+    }
+    
+    std::ofstream infile(filename, std::ios::app);
+    infile.close();
+    filename = filename.erase(filename.find(".txt"), filename.find(".txt") + 3);
+    p.save(filename);
+    cout << "File saved succesfully as " << filename << ".txt!\n";
+}
+
+void Interface::save(std::string& filename, Planet& p, const bool is_open)
+{
+    if (!is_open)
+    {
+        throw std::runtime_error("There is no current file opened!");
+    }
+    p.save(filename);
+    cout << filename << ".txt saved succesfully!\n";
+}
+
+void Interface::close(std::string filename, Planet& p, bool& is_open)
+{
+    if (!is_open)
+    {
+        throw std::runtime_error("There is no current file opened!");
+    }
+    p.clear_memory();
+    is_open  = false;
+    cout << filename << ".txt closed succesfully!\n";
+}
+
+void Interface::exit(bool& is_open)
+{
+    if (is_open)
+    {
+        std::cout << "You have unsaved changes. Please select '>close' to ignore changes or '>save'/'saveas' and then use '>close' to save them.\n";
+        return;
+    }
+    is_open = false;
+    return;
 }
 
 void Interface::add_planet(std::string name) { 

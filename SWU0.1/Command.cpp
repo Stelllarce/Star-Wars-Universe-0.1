@@ -8,19 +8,28 @@ void Command::init()
      cout  << "-----------------------STAR WARS UNIVERSE 0.1-----------------------\n";
     cout << "To check available commands type '>help'" << '\n';
 
-    string input;
-    string current_file_name;
-    Planet load;
+    
     cout << "Enter a command: ";
     while (true)
     {
         getline(std::cin, input);
-        file_command(input, current_file_name, load);
-        starwars_command(input, current_file_name, load);
+        file_command();
+        starwars_command();
         if (input == string(">exit"))
         {
-            cout << "Exiting the program...";
-            break;
+            try
+            {
+                Interface::exit(is_open);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
+            if (!is_open) 
+            {
+                cout << "Exiting the program...";
+                break;
+            }
         }
     
         cout << "Enter a command: ";
@@ -30,10 +39,10 @@ void Command::init()
     
 }
 
-void Command::file_command(std::string& user_input, std::string& current_file_name, Planet& p)
+void Command::file_command()
 {
     
-        if (user_input == string(">help"))
+        if (input == string(">help"))
         {
             cout << "Available commands:\n";
             cout << ">open <filepath> - opens the specified file\n";
@@ -42,9 +51,7 @@ void Command::file_command(std::string& user_input, std::string& current_file_na
             cout << ">saveas <filepath> - creates a new file in the specified file path\n";
             cout << ">exit - exits the program\n";
             cout << "TYPE '>pg2' to go to next page\n\n";
-        }
-        if (user_input == string(">pg2"))
-        {
+            cout << "-----------------------------------------------------------\n";
             cout << "Available commands 2 (slashes are used as delimiters, don't ignore):\n";
             cout << ">add planet <planet_name> - adds a planet and saves it (it is not loaded in the memory)\n";
             cout << ">create jedi - stations a new jedi on the designated planet\n";
@@ -57,12 +64,13 @@ void Command::file_command(std::string& user_input, std::string& current_file_na
             cout << ">mostusedon <planet_name> - shows the most used lightsaber color on that planet that is owned by atleast one GRAND_MASTER\n";
             cout << ">printp <planet_name> - shows the information about every jedi stationed on this planet\n";
         }
-        if (user_input.substr(0, strlen(">open")) == string(">open"))
+        
+        if (input.substr(0, strlen(">open")) == string(">open"))
         {
-            string file_path = user_input.substr(strlen(">open") + 1);
+            string file_path = input.substr(strlen(">open") + 1);
             try
             {
-                Interface::open(file_path, p);
+                Interface::open(file_path, load, is_open);
             }
             catch(const std::invalid_argument& e)
             {
@@ -72,41 +80,59 @@ void Command::file_command(std::string& user_input, std::string& current_file_na
             //cout << "Enter a command: "; 
         }
         
-        if (user_input == string(">close"))
+        if (input == string(">close"))
         {
-            cout << current_file_name << " closed succesfully!\n\n";
-            //cout << "Enter a command: "; 
+            try
+            {
+                Interface::close(current_file_name, load, is_open);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
         }
 
-        if (user_input.substr(0, strlen(">saveas")) == string(">saveas"))
+        if (input.substr(0, strlen(">saveas")) == string(">saveas"))
         {
-            string file_path = user_input.substr(strlen(">saveas") + 1);
-            cout << "File saved succesfully as " << file_path << "!\n\n";
-            //cout << "Enter a command: "; 
-
+            string file_path = input.substr(strlen(">saveas") + 1);
+            try
+            {
+                Interface::save_as(file_path, load, is_open);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
+            
         }
 
-        if (user_input == string(">save"))
+        if (input == string(">save"))
         {
-            cout << current_file_name << " saved succesfully!\n\n";
-            //cout << "Enter a command: "; 
-
+            try
+            {
+                Interface::save(current_file_name, load, is_open);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
+            
         }
 
         
 }
 
-void Command::starwars_command(std::string& user_input, std::string& current_file_name, Planet& p)
+void Command::starwars_command()
 {
     
     
-        if (user_input.substr(0, strlen(">add planet")) == string(">add planet"))
+        if (input.substr(0, strlen(">add planet")) == string(">add planet"))
         {
-            string filename = user_input.substr(strlen(">add planet") + 1);
+            string filename = input.substr(strlen(">add planet") + 1);
             Interface::add_planet(filename);
         }
 
-        if (user_input.substr(0, strlen(">create jedi")) == string(">create jedi"))
+        if (input.substr(0, strlen(">create jedi")) == string(">create jedi"))
         {
             string name, saber_col, rank_str, planet;
             int age, rank;
@@ -144,26 +170,26 @@ void Command::starwars_command(std::string& user_input, std::string& current_fil
 
         }
         
-        if (user_input.substr(0, strlen(">promote")) == string(">promote"))
+        if (input.substr(0, strlen(">promote")) == string(">promote"))
         {
-            string multiplier = user_input.substr(user_input.find("/") + 1);
-            string name = user_input.substr(strlen(">promote") + 1, user_input.length() - (multiplier.length() + strlen(">promote") + 2));
+            string multiplier = input.substr(input.find("/") + 1);
+            string name = input.substr(strlen(">promote") + 1, input.length() - (multiplier.length() + strlen(">promote") + 2));
 
             Interface::promote_jedi(name, stod(multiplier));
         }
 
-        if (user_input.substr(0, strlen(">demote")) == string(">demote"))
+        if (input.substr(0, strlen(">demote")) == string(">demote"))
         {
-            string multiplier = user_input.substr(user_input.find("/") + 1);
-            string name = user_input.substr(strlen(">demote") + 1, user_input.length() - (multiplier.length() + strlen(">demote") + 2));
+            string multiplier = input.substr(input.find("/") + 1);
+            string name = input.substr(strlen(">demote") + 1, input.length() - (multiplier.length() + strlen(">demote") + 2));
          
             Interface::demote_jedi(name, stod(multiplier));
 
         }
 
-        if (user_input.substr(0, strlen(">strongest")) == string(">strongest"))
+        if (input.substr(0, strlen(">strongest")) == string(">strongest"))
         {
-            string name = user_input.substr(strlen(">strongest") + 1);
+            string name = input.substr(strlen(">strongest") + 1);
             Jedi str;
             str = Interface::get_strongest_jedi(name);
 
@@ -171,10 +197,10 @@ void Command::starwars_command(std::string& user_input, std::string& current_fil
             str.print_jedi();
         }
 
-        if (user_input.substr(0, strlen(">youngest")) == string(">youngest"))
+        if (input.substr(0, strlen(">youngest")) == string(">youngest"))
         {
-            string rank = user_input.substr(user_input.find("/") + 1);
-            string name = user_input.substr(strlen(">youngest") + 1, user_input.length() - (rank.length() + strlen(">youngest") + 2));
+            string rank = input.substr(input.find("/") + 1);
+            string name = input.substr(strlen(">youngest") + 1, input.length() - (rank.length() + strlen(">youngest") + 2));
             int rankI;
             for (int i = 0; i < 6; i++)
             {
@@ -189,12 +215,12 @@ void Command::starwars_command(std::string& user_input, std::string& current_fil
             std::cout << "The youngest jedi on planet " << name << " with rank " << rank << " is ";
             young.print_jedi();
         }
-        if (user_input.substr(0, strlen(">mostusedon")) == string(">mostusedon")) {
+        if (input.substr(0, strlen(">mostusedon")) == string(">mostusedon")) {
 
-            if (user_input.find("/") != string::npos)
+            if (input.find("/") != string::npos)
             {
-                string rank = user_input.substr(user_input.find("/") + 1);
-                string name = user_input.substr(strlen(">mostusedon") + 1, user_input.size() - (rank.length() + strlen(">mostusedon") + 2));
+                string rank = input.substr(input.find("/") + 1);
+                string name = input.substr(strlen(">mostusedon") + 1, input.size() - (rank.length() + strlen(">mostusedon") + 2));
                 int rankI;
                 for (int i = 0; i < 6; i++)
                 {
@@ -210,22 +236,22 @@ void Command::starwars_command(std::string& user_input, std::string& current_fil
             }
             else
             {
-                string name = user_input.substr(strlen(">mostusedon") + 1);
+                string name = input.substr(strlen(">mostusedon") + 1);
                 string ms_color = Interface::get_most_used_saber_color(name);
                 cout << "The most used saber color on " << name << " by at least one jedi of rank GRAND_MASTER is " << ms_color << '\n';
             }
             
         }
-        if (user_input.substr(0, strlen(">printp")) == string(">printp")) {
-            //cout << user_input << '\n';
-            string name = user_input.substr(strlen(">printp") + 1);
+        if (input.substr(0, strlen(">printp")) == string(">printp")) {
+            //cout << input << '\n';
+            string name = input.substr(strlen(">printp") + 1);
             //cout << name << '\n';
             Interface::print_planet(name);
         }
-        if (user_input.substr(0, strlen(">remove jedi")) == string(">remove jedi")) {
+        if (input.substr(0, strlen(">remove jedi")) == string(">remove jedi")) {
 
-            string name = user_input.substr(user_input.find("/") + 1);
-            string planet = user_input.substr(strlen(">remove jedi") + 1, user_input.length() - (name.length() + strlen(">remove jedi") + 2));
+            string name = input.substr(input.find("/") + 1);
+            string planet = input.substr(strlen(">remove jedi") + 1, input.length() - (name.length() + strlen(">remove jedi") + 2));
             try
             {
                 Interface::removeJedi(planet, name);
@@ -235,16 +261,16 @@ void Command::starwars_command(std::string& user_input, std::string& current_fil
                 std::cerr << e.what() << '\n';
             }
         }
-        if (user_input.substr(0, strlen(">print jedi")) == string(">print jedi")) {
+        if (input.substr(0, strlen(">print jedi")) == string(">print jedi")) {
 
-            string name = user_input.substr(strlen(">print jedi") + 1);
+            string name = input.substr(strlen(">print jedi") + 1);
             
             Interface::print_jedi(name);
         }
-        if (user_input.find("+") != string::npos) {
+        if (input.find("+") != string::npos) {
 
-            string pname1 = user_input.substr(user_input.find("+") + 2);
-            string pname2 = user_input.substr(0, user_input.length() - (pname1.length() + 3));
+            string pname1 = input.substr(input.find("+") + 2);
+            string pname2 = input.substr(0, input.length() - (pname1.length() + 3));
             cout << pname1 << " " << pname2 << endl; 
             Interface::print_planets(pname1, pname2);
         }

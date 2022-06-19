@@ -110,6 +110,12 @@ bool Planet::seek_jedi_print(std::string jedi_name)
     return false;
 }
 
+void Planet::clear_memory()
+{
+    jedi.clear();
+    name.clear();
+}
+
 void Planet::banish_jedi(std::string name)
 {
     for (int i = 0; i < jedi.size(); i++)

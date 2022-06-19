@@ -109,10 +109,10 @@ TEST_SUITE("Testing Interface") {
             // Jedi b(std::string("Anakin Skywalker"), 0, 22, std::string("#2E67F8"), 10);
             // CHECK_EQ(a, test);
             // CHECK_EQ(b, test2);
-            // std::string most = Interface::get_most_used_saber_color(std::string("Tatooine"), 5);
-            // CHECK_EQ(most, std::string("#FF0000"));
-            // std::string most2 = Interface::get_most_used_saber_color(std::string("Tatooine"));
-            // CHECK_EQ(most2, std::string("#FF0000"));
+            std::string most = Interface::get_most_used_saber_color(std::string("Tatooine"), 5);
+            CHECK_EQ(most, std::string("#FF0000"));
+            std::string most2 = Interface::get_most_used_saber_color(std::string("Tatooine"));
+            CHECK_EQ(most2, std::string("#FF0000"));
         }
         catch(const std::exception& e)
         {

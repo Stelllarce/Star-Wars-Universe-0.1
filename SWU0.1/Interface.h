@@ -13,12 +13,11 @@ class Interface {
     static void search_through_files(std::string jedi_name, double multiplier, int prom_dem);
     static void search_through_files(std::string jedi_name);
     public:
-	// void save();
-    static void open(std::string filename, Planet& p);
-    // void save_as();
-    // void close();
-    // void exit();
-    // void help();
+	static void save(std::string& filename, Planet& p,const bool is_open);
+    static void open(std::string& filename, Planet& p, bool& is_open);
+    static void save_as(std::string& filename, Planet& p,const bool is_open);
+    static void close(std::string filename, Planet& p, bool& is_open);
+    static void exit(bool& is_open);
 
     static void add_planet(std::string name);
     static void create_jedi(std::string, std::string, int, int, std::string, double);
