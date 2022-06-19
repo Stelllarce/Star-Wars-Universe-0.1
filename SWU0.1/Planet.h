@@ -33,5 +33,6 @@ class Planet {
     void print_rank();
     void print_name();
 };
-
+std::string sort_and_find_gm(std::vector<std::string>& v, std::vector<std::string> &used);
+std::string sort_and_find(std::vector<std::string>& v);
 #endif // _PLANET_H_

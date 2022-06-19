@@ -215,8 +215,8 @@ Jedi Planet::find_youngest(int rank) const
     
 }
 
-std::string sort_and_find(std::vector<std::string>&);
-std::string sort_and_find_gm(std::vector<std::string>& v, std::vector<std::string> &used);
+// std::string sort_and_find(std::vector<std::string>&);
+// std::string sort_and_find_gm(std::vector<std::string>& v, std::vector<std::string> &used);
 
 std::string Planet::find_ms_color(int rank) const
 {
