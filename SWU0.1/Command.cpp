@@ -130,6 +130,7 @@ void Command::starwars_command()
         {
             string filename = input.substr(strlen(">add planet") + 1);
             Interface::add_planet(filename);
+            cout << filename << " successfully created!\n";
         }
 
         if (input.substr(0, strlen(">create jedi")) == string(">create jedi"))
@@ -138,17 +139,19 @@ void Command::starwars_command()
             int age, rank;
             double might;
             cout << "\nPlanet: ";
-            cin >> planet;
+            getline(cin, planet);
             cout << "\nName: ";
-            cin >> name;
+            getline(cin, name);
             cout << "\nAge: ";
             cin >> age;
+            cin.ignore();
             cout << "\nRank: ";
-            cin >> rank_str;
+            getline(cin, rank_str);
             cout << "\nSaber color: ";
-            cin >> saber_col;
+            getline(cin, saber_col);
             cout << "\nPower: ";
             cin >> might;
+            
 
             for (int i = 0; i < 6; i++)
             {
@@ -174,16 +177,32 @@ void Command::starwars_command()
         {
             string multiplier = input.substr(input.find("/") + 1);
             string name = input.substr(strlen(">promote") + 1, input.length() - (multiplier.length() + strlen(">promote") + 2));
-
-            Interface::promote_jedi(name, stod(multiplier));
+            try
+            {
+                
+                Interface::promote_jedi(name, stod(multiplier));
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
+            
         }
 
         if (input.substr(0, strlen(">demote")) == string(">demote"))
         {
             string multiplier = input.substr(input.find("/") + 1);
             string name = input.substr(strlen(">demote") + 1, input.length() - (multiplier.length() + strlen(">demote") + 2));
-         
-            Interface::demote_jedi(name, stod(multiplier));
+            try
+            {
+                
+                Interface::demote_jedi(name, stod(multiplier));
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
+            
 
         }
 

@@ -86,9 +86,9 @@ void Interface::create_jedi(std::string planet_name, std::string jedi_name, int 
         return;
     }
     Jedi yungl(jedi_name, rank, age, color, strgh);
-    if (jedi_exists(planet_name, yungl))
+    if (jedi_exists(planet_name, yungl.get_name()))
     {
-        throw std::runtime_error("Jedi already exists on this planet");
+        throw std::runtime_error("This jedi already exists on this planet or some other planet!");
         return;
     }
     
@@ -242,6 +242,7 @@ void Interface::search_through_files(std::string jedi_name)
         if (temp.seek_jedi_print(jedi_name)) {
             
             found = true;
+            test.close();
             return;
         }
 
@@ -249,6 +250,7 @@ void Interface::search_through_files(std::string jedi_name)
     if (!found)
     {
         cout << "\nNo such jedi found on any planet!\n";
+        test.close();
         return;
     }
     
@@ -268,7 +270,7 @@ void Interface::search_through_files(string jedi_name, double mult, int promote_
             
             temp.save(filename);
             found = true;
-            
+            test.close();
             return;
         }
 
@@ -276,6 +278,7 @@ void Interface::search_through_files(string jedi_name, double mult, int promote_
     if (!found)
     {
         cout << "\nNo such jedi found on any planet!\n";
+        test.close();
         return;
     }
     
@@ -290,9 +293,22 @@ bool Interface::jedi_exists(std::string planet_name, Jedi& jedi)
 
 bool Interface::jedi_exists(std::string planet_name,std::string jedi_name)
 {
-    Planet a(planet_name.c_str());
-    a.load(planet_name);
-    return a.seek_jedi(jedi_name);
+    string filename;
+    ifstream test("Planet_bodies.txt");
+    while (getline(test,  filename))
+    {
+        Planet a(filename.c_str());
+        a.load(filename);
+        
+        if (a.seek_jedi(jedi_name)) {
+            
+            test.close();
+            return true;
+        }
+
+    }
+    test.close();
+    return false;
 }
 
 

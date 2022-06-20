@@ -280,7 +280,7 @@ std::string Planet::find_msgm_color() const
         }
         used_colors.push_back(mscolor);
     }
-    throw std::runtime_error("\nThere is no frequent color\n");
+    throw std::runtime_error("There is no repeating string color.");
 }
 
 void Planet::print_rank()
